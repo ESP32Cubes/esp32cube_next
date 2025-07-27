@@ -1,0 +1,62 @@
+{
+    "site": {
+        "name": "ESP32Cube",
+        "title": "ESP32Cube - ESP32 开发教程与资源",
+        "description": "ESP32 开发教程、项目案例、技术分享",
+        "url": "https://esp32cube.com",
+        "version": "0.1.1",
+        "author": "ESP32Cube Team",
+        "email": "contact@esp32cube.com"
+    },
+    "database": {
+        "type": "sqlite",
+        "path": "./data/posts.db",
+        "host": "localhost",
+        "port": 5432,
+        "name": "esp32cube_db",
+        "username": "",
+        "password": ""
+    },
+    "content": {
+        "directory": "./content",
+        "supportedFormats": [
+            ".md",
+            ".markdown"
+        ],
+        "defaultAuthor": "ESP32Cube",
+        "defaultTags": [
+            "ESP32",
+            "Arduino",
+            "IoT"
+        ],
+        "pagination": {
+            "postsPerPage": 10,
+            "maxPages": 50
+        }
+    },
+    "social": {
+        "github": "https://github.com/esp32cube",
+        "twitter": "https://twitter.com/esp32cube",
+        "discord": "https://discord.gg/esp32cube",
+        "youtube": "https://youtube.com/@esp32cube"
+    },
+    "features": {
+        "search": true,
+        "tags": true,
+        "comments": false,
+        "analytics": true,
+        "rss": true,
+        "sitemap": true
+    },
+    "theme": {
+        "defaultMode": "light",
+        "codeTheme": "github",
+        "enableDarkMode": true
+    },
+    "seo": {
+        "googleAnalytics": "",
+        "baiduAnalytics": "",
+        "keywords": "ESP32, Arduino, IoT, 物联网, 开发教程",
+        "robots": "index, follow"
+    }
+}

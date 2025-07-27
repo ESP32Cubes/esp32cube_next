@@ -1,103 +1,95 @@
-import Image from "next/image";
+import { getAllPosts, getAllCategories } from '@/lib/posts';
+import { MainLayout } from '@/components/layout/main-layout';
+import { Footer } from '@/components/layout/footer';
+import { PostCard } from '@/components/post-card';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { BookOpen, Lightbulb, FileText, Home } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Home() {
+export default async function HomePage() {
+  const posts = await getAllPosts();
+  const categories = await getAllCategories();
+
+  // 按分类统计文章数量
+  const categoryStats = categories.map(category => {
+    const count = posts.filter(post => post.category === category).length;
+    return { category, count };
+  });
+
+  // 获取每个分类的最新文章
+  const latestByCategory = categories.map(category => {
+    const categoryPosts = posts.filter(post => post.category === category);
+    return {
+      category,
+      latestPost: categoryPosts[0] // 最新的文章
+    };
+  });
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <MainLayout>
+        <div className="mx-auto">
+          <div className="space-y-8">
+            {/* 页面标题 */}
+            <div className="text-center">
+              <h1 className="text-3xl font-bold tracking-tight">ESP32Cube</h1>
+              <p className="text-muted-foreground mt-2">
+                ESP32 开发教程、项目案例、技术分享
+              </p>
+            </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {/* 最新文章 */}
+            <div>
+              {posts.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {posts.slice(0, 8).map((post) => (
+                    <PostCard key={post.slug} post={post} />
+                  ))}
+                </div>
+              ) : (
+                <Card>
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">暂无文章内容</h3>
+                    <p className="text-muted-foreground text-center">
+                      请在 content 文件夹中添加 Markdown 文件
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+
+            {/* 分类最新文章 */}
+            {latestByCategory.length > 0 && (
+              <div className="space-y-6">
+                {latestByCategory.map(({ category, latestPost }) => (
+                  latestPost && (
+                    <div key={category}>
+                      <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-xl font-semibold">
+                          {category === 'tutorials' ? '最新教程' :
+                            category === 'projects' ? '最新项目' :
+                              category === 'guides' ? '最新指南' : `最新${category}`}
+                        </h2>
+                        <Link href={`/${category}`}>
+                          <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground">
+                            查看全部
+                          </Badge>
+                        </Link>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <PostCard post={latestPost} />
+                      </div>
+                    </div>
+                  )
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </MainLayout>
+      <Footer />
+    </>
   );
 }
