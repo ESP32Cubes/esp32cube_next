@@ -10,22 +10,25 @@ export async function GET(
     const { path: imagePath } = await params;
     const imageName = imagePath.join('/');
     
-    // 构建图片文件的完整路径
-    const imageFilePath = path.join(process.cwd(), 'content', 'images', imageName);
+    // Decode URL-encoded image name
+    const decodedImageName = decodeURIComponent(imageName);
     
-    // 检查文件是否存在
+    // Build the full path for the image file
+    const imageFilePath = path.join(process.cwd(), 'content', 'images', decodedImageName);
+    
+    // Check if the file exists
     try {
       await fs.access(imageFilePath);
     } catch (error) {
       return new NextResponse('Image not found', { status: 404 });
     }
     
-    // 读取图片文件
+    // Read the image file
     const imageBuffer = await fs.readFile(imageFilePath);
     
-    // 根据文件扩展名确定 MIME 类型
-    const ext = path.extname(imageName).toLowerCase();
-    let contentType = 'image/jpeg'; // 默认类型
+    // Determine content type based on file extension
+    const ext = path.extname(decodedImageName).toLowerCase();
+    let contentType = 'image/jpeg'; // Default type
     
     switch (ext) {
       case '.png':
@@ -47,7 +50,7 @@ export async function GET(
         break;
     }
     
-    // 返回图片文件
+    // Return the image file
     return new NextResponse(imageBuffer, {
       headers: {
         'Content-Type': contentType,

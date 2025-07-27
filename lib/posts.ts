@@ -12,6 +12,7 @@ export interface Post {
   cover?: string;
   date?: string;
   excerpt: string;
+  summary?: string;
   tags?: string[];
   author?: string;
 }
@@ -34,8 +35,21 @@ function getRandomCover(slug: string) {
   return fallbackCovers[idx];
 }
 
+function processCoverPath(coverPath: string): string {
+  // If it's already a full path (starts with /) or an external link, return directly
+  if (coverPath.startsWith('/') || coverPath.startsWith('http')) {
+    return coverPath;
+  }
+  
+  // URL encode image paths to handle spaces and special characters
+  const encodedCoverPath = encodeURIComponent(coverPath);
+  
+  // All relative image paths are assumed to be in the content/images directory
+  return `/content/images/${encodedCoverPath}`;
+}
+
 function processMarkdownLinks(content: string, currentCategory: string): string {
-  // 处理站内文章链接: [文章标题](文章文件名.md)
+  // Process internal article links: [Article Title](ArticleFileName.md)
   content = content.replace(
     /\[([^\]]+)\]\(([^)]+\.md)\)/g,
     (match, title, filename) => {
@@ -45,15 +59,29 @@ function processMarkdownLinks(content: string, currentCategory: string): string 
     }
   );
 
-  // 处理图片链接: ![](图片文件名)
+  // Process Obsidian-style image links: ![[filename]]
+  content = content.replace(
+    /!\[\[([^\]]+)\]\]/g,
+    (match, filename) => {
+      return `![](${filename})`;
+    }
+  );
+
+  // Process standard Markdown image links: ![](imageFileName)
   content = content.replace(
     /!\[([^\]]*)\]\(([^)]+)\)/g,
     (match, alt, imagePath) => {
-      if (!imagePath.includes('/') && !imagePath.startsWith('http')) {
-        const fullImagePath = `/content/images/${imagePath}`;
-        return `![${alt}](${fullImagePath})`;
+      // If it's already a full path or an external link, return directly
+      if (imagePath.startsWith('/') || imagePath.startsWith('http')) {
+        return match;
       }
-      return match;
+      
+      // URL encode image paths to handle spaces and special characters
+      const encodedImagePath = encodeURIComponent(imagePath);
+      
+      // All relative image paths are assumed to be in the content/images directory
+      const fullImagePath = `/content/images/${encodedImagePath}`;
+      return `![${alt}](${fullImagePath})`;
     }
   );
 
@@ -106,7 +134,7 @@ export async function getAllPosts(): Promise<Post[]> {
           .substring(0, 200) + '...';
 
         const slug = data.slug || path.basename(relativePath, '.md');
-        const cover = data.cover && data.cover.trim() ? data.cover : getRandomCover(slug);
+        const cover = data.cover && data.cover.trim() ? processCoverPath(data.cover) : getRandomCover(slug);
 
         return {
           filename: path.basename(relativePath),
@@ -114,9 +142,10 @@ export async function getAllPosts(): Promise<Post[]> {
           slug,
           category,
           cover,
-          date: data.date || '',
+          date: data.date ? String(data.date) : '',
           excerpt,
-          tags: data.tags || [],
+          summary: data.summary || '',
+          tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : []),
           author: data.author || '',
         };
       } catch (error) {
@@ -189,7 +218,7 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       .use(html)
       .process(processedContent);
 
-    const cover = data.cover && data.cover.trim() ? data.cover : getRandomCover(slug);
+    const cover = data.cover && data.cover.trim() ? processCoverPath(data.cover) : getRandomCover(slug);
 
     const postData = {
       filename: path.basename(targetFile.relativePath),
@@ -199,9 +228,10 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       cover,
       contentHtml: processedHtml.toString(),
       content: processedContent,
-      date: data.date || '',
-      tags: data.tags || [],
+      date: data.date ? String(data.date) : '',
+      tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : []),
       author: data.author || '',
+      summary: data.summary || '',
       excerpt: processedContent.replace(/[#*`]/g, '').substring(0, 200) + '...',
     };
 

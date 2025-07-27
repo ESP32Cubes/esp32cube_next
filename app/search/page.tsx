@@ -19,20 +19,20 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <MainLayout>
                 <div className="mx-auto">
                     <div className="space-y-8">
-                        {/* 页面标题 */}
+                        {/* Search header */}
                         <div className="text-center">
                             <h1 className="text-3xl font-bold tracking-tight">Search</h1>
                             <p className="text-muted-foreground mt-2">
-                                {query ? `搜索: "${query}"` : '输入关键词搜索文章'}
+                                {query ? `Search: "${query}"` : 'Enter keywords to search articles'}
                             </p>
                         </div>
 
-                        {/* 搜索结果 */}
+                        {/* Search results */}
                         {query && (
                             <div className="space-y-6">
                                 <div className="text-center">
                                     <p className="text-muted-foreground">
-                                        找到 {posts.length} 篇相关文章
+                                        Found {posts.length} related articles
                                     </p>
                                 </div>
 
@@ -46,9 +46,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                                     <Card>
                                         <CardContent className="flex flex-col items-center justify-center py-12">
                                             <Search className="h-12 w-12 text-muted-foreground mb-4" />
-                                            <h3 className="text-lg font-semibold mb-2">未找到相关文章</h3>
+                                            <h3 className="text-lg font-semibold mb-2">No related articles found</h3>
                                             <p className="text-muted-foreground text-center">
-                                                请尝试其他关键词
+                                                Please try other keywords
                                             </p>
                                         </CardContent>
                                     </Card>
@@ -56,14 +56,14 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                             </div>
                         )}
 
-                        {/* 搜索提示 */}
+                        {/* Search hint */}
                         {!query && (
                             <Card>
                                 <CardContent className="flex flex-col items-center justify-center py-12">
                                     <Search className="h-12 w-12 text-muted-foreground mb-4" />
-                                    <h3 className="text-lg font-semibold mb-2">开始搜索</h3>
+                                    <h3 className="text-lg font-semibold mb-2">Start searching</h3>
                                     <p className="text-muted-foreground text-center">
-                                        在地址栏添加 ?q=关键词 来搜索文章
+                                        Add ?q=keywords to the address bar to search articles
                                     </p>
                                 </CardContent>
                             </Card>

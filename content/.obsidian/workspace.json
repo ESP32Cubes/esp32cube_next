@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "e12d4f975374c85a",
+        "id": "e90d95e8d5868630",
         "type": "tabs",
         "children": [
           {
-            "id": "f3b10d27baa6a3f7",
+            "id": "e24dd4ee4e3a9048",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tutorials/01-example.md",
+                "file": "tutorials/12_Develop_ESP32_in_VScode_with_PlatformIO.md",
                 "mode": "source",
-                "source": true
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "01-example"
+              "title": "12_Develop_ESP32_in_VScode_with_PlatformIO"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "tutorials/01-example.md",
+                "file": "tutorials/12_Develop_ESP32_in_VScode_with_PlatformIO.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "01-example 的反向链接列表"
+              "title": "12_Develop_ESP32_in_VScode_with_PlatformIO 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "tutorials/01-example.md",
+                "file": "tutorials/12_Develop_ESP32_in_VScode_with_PlatformIO.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "01-example 的出链列表"
+              "title": "12_Develop_ESP32_in_VScode_with_PlatformIO 的出链列表"
             }
           },
           {
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "tutorials/01-example.md",
+                "file": "tutorials/12_Develop_ESP32_in_VScode_with_PlatformIO.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "01-example 的大纲"
+              "title": "12_Develop_ESP32_in_VScode_with_PlatformIO 的大纲"
             }
           }
         ]
@@ -168,12 +168,47 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "f3b10d27baa6a3f7",
+  "active": "e24dd4ee4e3a9048",
   "lastOpenFiles": [
-    "images/3.jpg",
+    "images/001a7f50d4b8fe391ebe9a34f43bead4_MD5.jpg",
+    "tutorials/11_ESP32_Dual-Core_Usage.md",
+    "images/Pasted image 20250727232125.png",
+    "tutorials/10_What_is_the_Secrete_Behind_ESP32_Auto_Flash.md",
+    "tutorials/09_How_to_flash_a_bin_file_to_ESP32.md",
+    "tutorials/010_iot_esp32_platformio.md",
+    "tutorials/010_Remote_Control_Light_Switch.md",
+    "tutorials/08_Flash_Code_to_ESP32_by_Arduino_IDE.md",
+    "tutorials/07_Flash_or_Upload_Configure_File_to_ESP32.md",
+    "tutorials/06_ESP32_PWM_Output.md",
+    "tutorials/05_ESP32_Touch_Button.md",
+    "tutorials/04_How_to_Blink_a_LED_with_ESP32.md",
+    "tutorials/03_ESP32_DEVKIT_V1_Pin_Referance.md",
     "tutorials/02-esp32-wifi-tutorial.md",
+    "tutorials/01-example.md",
+    "tutorials/02_ESP32_DEVKIT_Pin_Name.md",
+    "tutorials/01_Debouncing_with_Bounce2_Library.md",
+    "tutorials/00_test.md",
+    "tutorials/000_template.md",
+    "tutorials/28_HSC001_module.md",
+    "images/Pasted image 20250415194629.jpeg",
+    "images/Pasted image 20250415194607.jpeg",
+    "images/touch_button2.jpg",
+    "images/Rotation Encoder.jpeg",
+    "Pasted.md",
+    "images/pt1000_resistance.svg",
+    "images/tilt_swtich.excalidraw.svg",
+    "images/Pasted image 20241129160230.jpeg",
+    "images/Pasted image 20241129135756.jpeg",
+    "images/Pasted image 20241129134903.jpeg",
+    "images/ESP32_Wroom.pdf",
+    "images/ESP32_DevkitC.pdf",
+    "tutorials/901_obsidian_remove_task_strikethrough.md",
+    "tutorials/54_Control_LED_Brightness_with_ESP32_PWM.md",
+    "tutorials/53_ESP32_Sensor Tilt_Switch.md",
+    "tutorials/52_ESP32_Sensor_DHT11_Temperature_and_Humidity_Sensor.md",
+    "tutorials/32_ollma_proxy.md",
+    "tutorials/31_voice_recorder.md",
     "images",
-    "新建文件夹",
-    "tutorials/01-example.md"
+    "新建文件夹"
   ]
 }

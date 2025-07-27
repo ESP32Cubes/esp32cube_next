@@ -10,15 +10,15 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
-    // 生成随机浏览量（仅用于演示）
+    // Generate random views (for demo only)
     const views = Math.floor(Math.random() * 5000) + 100;
 
-    // 分类显示名称
+    // Category display name
     const getCategoryName = (category: string) => {
         switch (category) {
-            case 'tutorials': return '教程';
-            case 'projects': return '项目';
-            case 'guides': return '指南';
+            case 'tutorials': return 'Tutorials';
+            case 'projects': return 'Projects';
+            case 'guides': return 'Guides';
             default: return category;
         }
     };
@@ -26,7 +26,7 @@ export function PostCard({ post }: PostCardProps) {
     return (
         <Link href={`/post/${post.slug}`} className="group block">
             <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] pt-0">
-                {/* 封面图片 */}
+                {/* Cover image */}
                 {post.cover && (
                     <div className="relative aspect-video overflow-hidden">
                         <img
@@ -37,8 +37,8 @@ export function PostCard({ post }: PostCardProps) {
                     </div>
                 )}
 
-                <CardHeader className="pb-3">
-                    {/* 分类和日期信息 */}
+                <CardHeader >
+                    {/* Category and date info */}
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Badge variant="outline" className="text-xs">
@@ -49,29 +49,27 @@ export function PostCard({ post }: PostCardProps) {
                             <time>
                                 {post.date ? new Date(post.date).toLocaleDateString('zh-CN', {
                                     year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                }) : 'Unknown date'}
+                                    month: '2-digit',
+                                    day: '2-digit'
+                                }).replace(/\//g, '-') : 'Unknown date'}
                             </time>
                         </div>
                     </div>
 
-                    {/* 文章标题 */}
+                    {/* Post title */}
                     <h3 className="text-lg font-semibold leading-tight group-hover:text-primary transition-colors">
                         {post.title}
                     </h3>
                 </CardHeader>
 
                 <CardContent className="pt-0">
-                    {/* 摘要 */}
+                    {/* Summary */}
                     <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                        {post.excerpt}
+                        {post.summary || post.excerpt}
                     </p>
 
-                    {/* 标签 */}
-                    {post.tags && post.tags.length > 0 && (
+                    {/* Tags */}
+                    {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mb-4">
                             {post.tags.slice(0, 3).map((tag) => (
                                 <Badge key={tag} variant="secondary" className="text-xs">
@@ -86,7 +84,7 @@ export function PostCard({ post }: PostCardProps) {
                         </div>
                     )}
 
-                    {/* 统计信息 */}
+                    {/* Stats */}
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <div className="flex items-center gap-1">
                             <Eye className="h-3 w-3" />

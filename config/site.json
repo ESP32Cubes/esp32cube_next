@@ -1,44 +1,48 @@
 {
     "site": {
         "name": "ESP32Cube",
-        "title": "ESP32Cube - ESP32 开发教程与资源",
-        "description": "ESP32 开发教程、项目案例、技术分享",
+        "title": "ESP32Cube - ESP32 Development Tutorials and Resources",
+        "description": "ESP32 Development Tutorials, Project Examples, and Technical Sharing",
         "url": "https://esp32cube.com",
-        "version": "0.1.1",
+        "version": "0.8.1",
         "author": "ESP32Cube Team",
-        "email": "contact@esp32cube.com"
+        "email": "contact@esp32cube.com",
+        "language": "en",
+        "timezone": "Asia/Shanghai",
+        "googleAnalytics": "",
+        "baiduAnalytics": "",
+        "keywords": "ESP32, Arduino, IoT, Internet of Things, Development Tutorials",
+        "robots": "index, follow"
     },
     "database": {
-        "type": "sqlite",
-        "path": "./data/posts.db",
+        "type": "file",
+        "path": "./data",
         "host": "localhost",
         "port": 5432,
-        "name": "esp32cube_db",
+        "name": "esp32cube",
         "username": "",
         "password": ""
     },
     "content": {
         "directory": "./content",
         "supportedFormats": [
-            ".md",
-            ".markdown"
+            "md",
+            "markdown"
         ],
-        "defaultAuthor": "ESP32Cube",
+        "defaultAuthor": "ESP32Cube Team",
         "defaultTags": [
             "ESP32",
             "Arduino",
             "IoT"
         ],
         "pagination": {
-            "postsPerPage": 10,
-            "maxPages": 50
+            "postsPerPage": 12
         }
     },
     "social": {
         "github": "https://github.com/esp32cube",
         "twitter": "https://twitter.com/esp32cube",
-        "discord": "https://discord.gg/esp32cube",
-        "youtube": "https://youtube.com/@esp32cube"
+        "discord": "https://discord.gg/esp32cube"
     },
     "features": {
         "search": true,
@@ -52,11 +56,5 @@
         "defaultMode": "light",
         "codeTheme": "github",
         "enableDarkMode": true
-    },
-    "seo": {
-        "googleAnalytics": "",
-        "baiduAnalytics": "",
-        "keywords": "ESP32, Arduino, IoT, 物联网, 开发教程",
-        "robots": "index, follow"
     }
 }

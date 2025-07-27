@@ -13,15 +13,15 @@ export default async function GuidesPage() {
             <MainLayout>
                 <div className="mx-auto">
                     <div className="space-y-8">
-                        {/* 页面标题 */}
+                        {/* Page header */}
                         <div className="text-center">
-                            <h1 className="text-3xl font-bold tracking-tight">指南 (Guides)</h1>
+                            <h1 className="text-3xl font-bold tracking-tight">Guides</h1>
                             <p className="text-muted-foreground mt-2">
-                                ESP32 开发指南和参考资料
+                                ESP32 development guides and reference materials
                             </p>
                         </div>
 
-                        {/* 文章网格 */}
+                        {/* Posts grid */}
                         {posts.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                 {posts.map((post) => (
@@ -32,9 +32,9 @@ export default async function GuidesPage() {
                             <Card>
                                 <CardContent className="flex flex-col items-center justify-center py-12">
                                     <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-                                    <h3 className="text-lg font-semibold mb-2">暂无指南</h3>
+                                    <h3 className="text-lg font-semibold mb-2">No guides found</h3>
                                     <p className="text-muted-foreground text-center">
-                                        请在 content/guides 文件夹中添加 Markdown 文件
+                                        Please add Markdown files in the content/guides folder
                                     </p>
                                 </CardContent>
                             </Card>

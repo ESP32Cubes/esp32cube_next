@@ -21,7 +21,7 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
                     // @ts-ignore
                     const VditorPreview = (await import('vditor/dist/method.min')).default;
 
-                    // 根据当前主题确定 Vditor 主题
+                    // Determine Vditor theme based on current theme
                     const vditorTheme = theme === 'dark' ? 'dark' : 'light';
 
                     VditorPreview.preview(previewRef.current, content, {
@@ -42,7 +42,7 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
                             current: vditorTheme
                         },
                         after: () => {
-                            console.log('Vditor 渲染完成');
+                            console.log('Vditor rendering completed');
                         }
                     });
                 } catch (error) {
@@ -52,12 +52,12 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
         };
 
         loadVditor();
-    }, [content, codeTheme, theme]); // 添加 theme 作为依赖项
+    }, [content, codeTheme, theme]); // Add theme as dependency
 
     return (
         <>
             <style jsx global>{`
-                /* 全局链接样式 */
+                /* Global link styles */
                 .vditor-preview a {
                     color: hsl(var(--primary)) !important;
                     text-decoration: underline !important;
@@ -76,7 +76,7 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
                     border-radius: 2px !important;
                 }
 
-                /* 代码块中的链接保持原样 */
+                /* Keep links in code blocks unchanged */
                 .vditor-preview pre a,
                 .vditor-preview code a {
                     color: inherit !important;

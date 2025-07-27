@@ -11,84 +11,84 @@ export default async function ConfigPage() {
         <>
             <MainLayout>
                 <div className="max-w-6xl mx-auto py-8">
-                    <h1 className="text-3xl font-bold mb-8">网站配置</h1>
+                    <h1 className="text-3xl font-bold mb-8">Website Configuration</h1>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {/* 网站信息 */}
+                        {/* Website Information */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>网站信息</CardTitle>
+                                <CardTitle>Website Information</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                <div><strong>名称:</strong> {config.site.name}</div>
-                                <div><strong>标题:</strong> {config.site.title}</div>
-                                <div><strong>描述:</strong> {config.site.description}</div>
+                                <div><strong>Name:</strong> {config.site.name}</div>
+                                <div><strong>Title:</strong> {config.site.title}</div>
+                                <div><strong>Description:</strong> {config.site.description}</div>
                                 <div><strong>URL:</strong> {config.site.url}</div>
-                                <div><strong>版本:</strong> <Badge variant="secondary">{config.site.version}</Badge></div>
-                                <div><strong>作者:</strong> {config.site.author}</div>
-                                <div><strong>邮箱:</strong> {config.site.email}</div>
+                                <div><strong>Version:</strong> <Badge variant="secondary">{config.site.version}</Badge></div>
+                                <div><strong>Author:</strong> {config.site.author}</div>
+                                <div><strong>Email:</strong> {config.site.email}</div>
                             </CardContent>
                         </Card>
 
-                        {/* 数据库配置 */}
+                        {/* Database Configuration */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>数据库配置</CardTitle>
+                                <CardTitle>Database Configuration</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                <div><strong>类型:</strong> <Badge variant="outline">{config.database.type}</Badge></div>
-                                <div><strong>路径:</strong> {config.database.path}</div>
-                                <div><strong>主机:</strong> {config.database.host}</div>
-                                <div><strong>端口:</strong> {config.database.port}</div>
-                                <div><strong>数据库名:</strong> {config.database.name}</div>
+                                <div><strong>Type:</strong> <Badge variant="outline">{config.database.type}</Badge></div>
+                                <div><strong>Path:</strong> {config.database.path}</div>
+                                <div><strong>Host:</strong> {config.database.host}</div>
+                                <div><strong>Port:</strong> {config.database.port}</div>
+                                <div><strong>Database Name:</strong> {config.database.name}</div>
                             </CardContent>
                         </Card>
 
-                        {/* 内容配置 */}
+                        {/* Content Configuration */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>内容配置</CardTitle>
+                                <CardTitle>Content Configuration</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                <div><strong>目录:</strong> {config.content.directory}</div>
-                                <div><strong>支持格式:</strong> {config.content.supportedFormats.join(', ')}</div>
-                                <div><strong>默认作者:</strong> {config.content.defaultAuthor}</div>
-                                <div><strong>默认标签:</strong> {config.content.defaultTags.join(', ')}</div>
-                                <div><strong>每页文章数:</strong> {config.content.pagination.postsPerPage}</div>
+                                <div><strong>Directory:</strong> {config.content.directory}</div>
+                                <div><strong>Supported Formats:</strong> {config.content.supportedFormats.join(', ')}</div>
+                                <div><strong>Default Author:</strong> {config.content.defaultAuthor}</div>
+                                <div><strong>Default Tags:</strong> {config.content.defaultTags.join(', ')}</div>
+                                <div><strong>Posts per Page:</strong> {config.content.pagination.postsPerPage}</div>
                             </CardContent>
                         </Card>
 
-                        {/* 主题配置 */}
+                        {/* Theme Configuration */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>主题配置</CardTitle>
+                                <CardTitle>Theme Configuration</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                <div><strong>默认模式:</strong> <Badge variant="outline">{config.theme.defaultMode}</Badge></div>
-                                <div><strong>代码主题:</strong> <Badge variant="outline">{config.theme.codeTheme}</Badge></div>
-                                <div><strong>暗色模式:</strong> {config.theme.enableDarkMode ? '启用' : '禁用'}</div>
+                                <div><strong>Default Mode:</strong> <Badge variant="outline">{config.theme.defaultMode}</Badge></div>
+                                <div><strong>Code Theme:</strong> <Badge variant="outline">{config.theme.codeTheme}</Badge></div>
+                                <div><strong>Dark Mode:</strong> {config.theme.enableDarkMode ? 'Enabled' : 'Disabled'}</div>
                             </CardContent>
                         </Card>
 
-                        {/* 功能配置 */}
+                        {/* Features Configuration */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>功能配置</CardTitle>
+                                <CardTitle>Features Configuration</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                <div><strong>搜索:</strong> {config.features.search ? '启用' : '禁用'}</div>
-                                <div><strong>标签:</strong> {config.features.tags ? '启用' : '禁用'}</div>
-                                <div><strong>评论:</strong> {config.features.comments ? '启用' : '禁用'}</div>
-                                <div><strong>统计:</strong> {config.features.analytics ? '启用' : '禁用'}</div>
-                                <div><strong>RSS:</strong> {config.features.rss ? '启用' : '禁用'}</div>
-                                <div><strong>站点地图:</strong> {config.features.sitemap ? '启用' : '禁用'}</div>
+                                <div><strong>Search:</strong> {config.features.search ? 'Enabled' : 'Disabled'}</div>
+                                <div><strong>Tags:</strong> {config.features.tags ? 'Enabled' : 'Disabled'}</div>
+                                <div><strong>Comments:</strong> {config.features.comments ? 'Enabled' : 'Disabled'}</div>
+                                <div><strong>Analytics:</strong> {config.features.analytics ? 'Enabled' : 'Disabled'}</div>
+                                <div><strong>RSS:</strong> {config.features.rss ? 'Enabled' : 'Disabled'}</div>
+                                <div><strong>Sitemap:</strong> {config.features.sitemap ? 'Enabled' : 'Disabled'}</div>
                             </CardContent>
                         </Card>
 
-                        {/* 社交链接 */}
+                        {/* Social Links */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>社交链接</CardTitle>
+                                <CardTitle>Social Links</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
                                 <div><strong>GitHub:</strong> <a href={config.social.github} target="_blank" className="text-blue-600 hover:underline">{config.social.github}</a></div>

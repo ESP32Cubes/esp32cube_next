@@ -22,10 +22,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <MainLayout>
                     <div className="w-full mx-auto">
                         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                            {/* 左侧主要内容区域 */}
+                            {/* Left main content area */}
                             <div className="lg:col-span-3">
 
-                                {/* 文章头部 */}
+                                {/* Post header */}
                                 <Card className="mb-8 pt-0 overflow-hidden">
                                     {postData.cover && (
                                         <div className="relative h-64 overflow-hidden">
@@ -45,16 +45,20 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Calendar className="w-4 h-4" />
-                                                <span>{postData.date}</span>
+                                                <span>{postData.date ? new Date(postData.date).toLocaleDateString('zh-CN', {
+                                                    year: 'numeric',
+                                                    month: '2-digit',
+                                                    day: '2-digit'
+                                                }).replace(/\//g, '-') : 'Unknown date'}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Link href={`/${postData.category}`} className="hover:text-primary transition-colors">
                                                     <div className="flex items-center gap-2">
                                                         <FolderOpen className="w-4 h-4" />
                                                         <span>
-                                                            {postData.category === 'tutorials' ? '教程' :
-                                                                postData.category === 'projects' ? '项目' :
-                                                                    postData.category === 'guides' ? '指南' : postData.category}
+                                                            {postData.category === 'tutorials' ? 'Tutorials' :
+                                                                postData.category === 'projects' ? 'Projects' :
+                                                                    postData.category === 'guides' ? 'Guides' : postData.category}
                                                         </span>
                                                     </div>
                                                 </Link>
@@ -74,7 +78,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                         )}
                                     </CardHeader>
 
-                                    {/* 文章内容 */}
+                                    {/* Post content */}
                                     <CardContent className="pb-8">
                                         <PostContent
                                             content={postData.content}
@@ -84,14 +88,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                 </Card>
                             </div>
 
-                            {/* 右侧侧边栏 */}
+                            {/* Right sidebar */}
                             <div className="lg:col-span-1">
                                 <div className="space-y-6">
 
-                                    {/* 最新文章 */}
+                                    {/* Latest posts */}
                                     <Card>
                                         <CardHeader>
-                                            <h3 className="text-lg font-semibold">最新文章</h3>
+                                            <h3 className="text-lg font-semibold">Latest Posts</h3>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="space-y-3">
@@ -106,10 +110,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                         </CardContent>
                                     </Card>
 
-                                    {/* 相关文章 */}
+                                    {/* Related posts */}
                                     <Card>
                                         <CardHeader>
-                                            <h3 className="text-lg font-semibold">相关文章</h3>
+                                            <h3 className="text-lg font-semibold">Related Posts</h3>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="space-y-3">
@@ -143,10 +147,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <>
                 <MainLayout>
                     <div className="max-w-4xl mx-auto text-center py-12">
-                        <h1 className="text-2xl font-bold mb-4">文章未找到</h1>
-                        <p className="text-gray-600 mb-6">无法找到slug为 "{slug}" 的文章</p>
+                        <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
+                        <p className="text-gray-600 mb-6">Could not find a post with slug "{slug}"</p>
                         <Link href="/">
-                            <Button>返回首页</Button>
+                            <Button>Return to Homepage</Button>
                         </Link>
                     </div>
                 </MainLayout>

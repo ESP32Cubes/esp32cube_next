@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'ESP32Cube - ESP32 Projects & Tutorials',
-  description: '基于Next.js构建的ESP32项目教程和内容管理系统',
+  description: 'ESP32 project tutorials and content management system built with Next.js',
 };
 
 export default function RootLayout({

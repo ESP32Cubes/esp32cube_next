@@ -4,37 +4,61 @@ import { Footer } from '@/components/layout/footer';
 import { PostCard } from '@/components/post-card';
 import { Card, CardContent } from '@/components/ui/card';
 import { BookOpen } from 'lucide-react';
+import { Pagination } from '@/components/ui/pagination';
 
-export default async function TutorialsPage() {
+interface TutorialsPageProps {
+    searchParams: { page?: string };
+}
+
+export default async function TutorialsPage({ searchParams }: TutorialsPageProps) {
     const posts = await getPostsByCategory('tutorials');
+
+    // Pagination logic
+    const postsPerPage = 12;
+    const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+    const totalPages = Math.ceil(posts.length / postsPerPage);
+
+    // Calculate pagination
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const currentPosts = posts.slice(startIndex, endIndex);
 
     return (
         <>
             <MainLayout>
                 <div className="mx-auto">
                     <div className="space-y-8">
-                        {/* 页面标题 */}
+                        {/* Page header */}
                         <div className="text-center">
-                            <h1 className="text-3xl font-bold tracking-tight">教程 (Tutorials)</h1>
+                            <h1 className="text-3xl font-bold tracking-tight">Tutorials</h1>
                             <p className="text-muted-foreground mt-2">
-                                ESP32 开发教程和指南
+                                ESP32 development tutorials and guides
                             </p>
                         </div>
 
-                        {/* 文章网格 */}
+                        {/* Posts grid */}
                         {posts.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                {posts.map((post) => (
-                                    <PostCard key={post.slug} post={post} />
-                                ))}
-                            </div>
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {currentPosts.map((post) => (
+                                        <PostCard key={post.slug} post={post} />
+                                    ))}
+                                </div>
+
+                                {/* Pagination */}
+                                <Pagination
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    baseUrl="/tutorials"
+                                />
+                            </>
                         ) : (
                             <Card>
                                 <CardContent className="flex flex-col items-center justify-center py-12">
                                     <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
-                                    <h3 className="text-lg font-semibold mb-2">暂无教程</h3>
+                                    <h3 className="text-lg font-semibold mb-2">No tutorials yet</h3>
                                     <p className="text-muted-foreground text-center">
-                                        请在 content/tutorials 文件夹中添加 Markdown 文件
+                                        Please add Markdown files in the content/tutorials folder
                                     </p>
                                 </CardContent>
                             </Card>

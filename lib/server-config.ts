@@ -72,12 +72,12 @@ export async function getConfig(): Promise<SiteConfig> {
     return configCache;
   } catch (error) {
     console.error('Failed to load config:', error);
-    // 返回默认配置
+    // Return default configuration
     const defaultConfig: SiteConfig = {
       site: {
         name: 'ESP32Cube',
-        title: 'ESP32Cube - ESP32 开发教程与资源',
-        description: 'ESP32 开发教程、项目案例、技术分享',
+        title: 'ESP32Cube - ESP32 Development Tutorials and Resources',
+        description: 'ESP32 Development Tutorials, Project Examples, and Technical Sharing',
         url: 'https://esp32cube.com',
         version: '0.8.1',
         author: 'ESP32Cube Team',
@@ -124,7 +124,7 @@ export async function getConfig(): Promise<SiteConfig> {
       seo: {
         googleAnalytics: '',
         baiduAnalytics: '',
-        keywords: 'ESP32, Arduino, IoT, 物联网, 开发教程',
+        keywords: 'ESP32, Arduino, IoT, Internet of Things, Development Tutorials',
         robots: 'index, follow'
       }
     };
@@ -133,7 +133,7 @@ export async function getConfig(): Promise<SiteConfig> {
   }
 }
 
-// 便捷函数
+// Convenient functions
 export async function getSiteInfo() {
   const config = await getConfig();
   return config.site;

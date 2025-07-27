@@ -28,7 +28,7 @@ export function SearchForm({ initialQuery = '' }: SearchFormProps) {
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="输入关键词搜索文章标题、内容、标签或作者..."
+                    placeholder="Enter keywords to search article titles, content, tags, or authors..."
                     className="pl-9"
                 />
             </div>

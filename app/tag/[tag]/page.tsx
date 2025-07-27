@@ -12,7 +12,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
     const posts = await getPostsByTag(tag);
     const allPosts = await getAllPosts();
 
-    // 收集所有标签用于侧边栏
+    // Collect all tags for the sidebar
     const allTags = new Set<string>();
     allPosts.forEach(post => {
         if (post.tags) {
@@ -26,10 +26,10 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
         <>
             <MainLayout>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* 主要内容区域 */}
+                    {/* Main content area */}
                     <div className="lg:col-span-3">
                         <div className="space-y-6">
-                            {/* 页面标题 */}
+                            {/* Page header */}
                             <div className="flex items-center gap-4">
                                 <Link href="/tags">
                                     <ArrowLeft className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
@@ -37,12 +37,12 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
                                 <div>
                                     <h1 className="text-3xl font-bold tracking-tight">#{tag}</h1>
                                     <p className="text-muted-foreground mt-1">
-                                        {posts.length} 篇文章
+                                        {posts.length} articles
                                     </p>
                                 </div>
                             </div>
 
-                            {/* 文章列表 */}
+                            {/* Posts grid */}
                             {posts.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {posts.map((post) => (
@@ -53,9 +53,9 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
                                 <Card>
                                     <CardContent className="flex flex-col items-center justify-center py-12">
                                         <Tag className="h-12 w-12 text-muted-foreground mb-4" />
-                                        <h3 className="text-lg font-semibold mb-2">暂无文章</h3>
+                                        <h3 className="text-lg font-semibold mb-2">No articles yet</h3>
                                         <p className="text-muted-foreground text-center">
-                                            该标签下暂无文章
+                                            No articles under this tag yet
                                         </p>
                                     </CardContent>
                                 </Card>
@@ -63,11 +63,11 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
                         </div>
                     </div>
 
-                    {/* 侧边栏 */}
+                    {/* Sidebar */}
                     <div className="lg:col-span-1">
                         <Card>
                             <CardContent className="p-6">
-                                <h3 className="text-lg font-semibold mb-4">所有标签</h3>
+                                <h3 className="text-lg font-semibold mb-4">All Tags</h3>
                                 <div className="flex flex-wrap gap-2">
                                     {tagsArray.map((t) => (
                                         <Link key={t} href={`/tag/${t}`}>

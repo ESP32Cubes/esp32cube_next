@@ -52,9 +52,9 @@ export function Header() {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            {/* 顶部栏 */}
+            {/* Top bar */}
             <div className="container mx-auto flex h-14 items-center">
-                {/* 左侧：菜单按钮和Logo */}
+                {/* Left: Menu button and Logo */}
                 <div className="flex items-center gap-4">
                     <Button
                         variant="ghost"
@@ -70,9 +70,9 @@ export function Header() {
                     </Link>
                 </div>
 
-                {/* 右侧：操作按钮 */}
+                {/* Right: Action buttons */}
                 <div className="flex flex-1 items-center justify-end space-x-4">
-                    {/* 搜索框 */}
+                    {/* Search box */}
                     <div className="relative hidden md:block">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <form
@@ -93,14 +93,14 @@ export function Header() {
                         </form>
                     </div>
 
-                    {/* 源代码链接 */}
+                    {/* Source code link */}
                     <Button variant="ghost" size="icon" asChild>
                         <Link href="https://github.com" target="_blank">
                             <Github className="h-5 w-5" />
                         </Link>
                     </Button>
 
-                    {/* 主题切换 */}
+                    {/* Theme toggle */}
                     <Button
                         variant="ghost"
                         size="icon"
@@ -110,7 +110,7 @@ export function Header() {
                         <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                     </Button>
 
-                    {/* 用户信息 */}
+                    {/* User info */}
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <User className="h-4 w-4" />
                         <span>Guest</span>
@@ -118,7 +118,7 @@ export function Header() {
                 </div>
             </div>
 
-            {/* 导航菜单栏 */}
+            {/* Navigation menu */}
             <div className="border-t bg-background/95">
                 <div className="container mx-auto">
                     <nav className="flex items-center space-x-6 h-12">
