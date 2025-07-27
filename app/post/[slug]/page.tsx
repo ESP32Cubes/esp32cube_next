@@ -79,7 +79,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                         <PostContent
                                             content={postData.content}
                                             codeTheme={themeConfig.codeTheme}
-                                            defaultMode={themeConfig.defaultMode as 'light' | 'dark'}
                                         />
                                     </CardContent>
                                 </Card>
@@ -98,7 +97,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                             <div className="space-y-3">
                                                 {allPosts.slice(0, 5).map((post) => (
                                                     <Link key={post.slug} href={`/post/${post.slug}`}>
-                                                        <div className="text-sm text-blue-600 hover:text-blue-800 transition-colors cursor-pointer">
+                                                        <div className="text-sm text-primary hover:text-primary/80 transition-colors cursor-pointer">
                                                             {post.title}
                                                         </div>
                                                     </Link>
@@ -122,7 +121,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                                     .slice(0, 5)
                                                     .map((post) => (
                                                         <Link key={post.slug} href={`/post/${post.slug}`}>
-                                                            <div className="text-sm text-blue-600 hover:text-blue-800 transition-colors cursor-pointer">
+                                                            <div className="text-sm text-primary hover:text-primary/80 transition-colors cursor-pointer">
                                                                 {post.title}
                                                             </div>
                                                         </Link>

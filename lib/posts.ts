@@ -25,7 +25,6 @@ const contentDirectory = path.join(process.cwd(), 'content');
 const fallbackCovers = ['/1.jpg', '/2.jpg', '/3.jpg', '/4.jpg'];
 
 function getRandomCover(slug: string) {
-  // 保证同一slug始终分配同一张图片
   let hash = 0;
   for (let i = 0; i < slug.length; i++) {
     hash = ((hash << 5) - hash) + slug.charCodeAt(i);
@@ -35,7 +34,32 @@ function getRandomCover(slug: string) {
   return fallbackCovers[idx];
 }
 
-// 递归读取目录中的所有 Markdown 文件
+function processMarkdownLinks(content: string, currentCategory: string): string {
+  // 处理站内文章链接: [文章标题](文章文件名.md)
+  content = content.replace(
+    /\[([^\]]+)\]\(([^)]+\.md)\)/g,
+    (match, title, filename) => {
+      const slug = filename.replace('.md', '');
+      const cleanSlug = slug.replace(/^\d{1,3}-/, '');
+      return `[${title}](/post/${cleanSlug})`;
+    }
+  );
+
+  // 处理图片链接: ![](图片文件名)
+  content = content.replace(
+    /!\[([^\]]*)\]\(([^)]+)\)/g,
+    (match, alt, imagePath) => {
+      if (!imagePath.includes('/') && !imagePath.startsWith('http')) {
+        const fullImagePath = `/content/images/${imagePath}`;
+        return `![${alt}](${fullImagePath})`;
+      }
+      return match;
+    }
+  );
+
+  return content;
+}
+
 async function getAllMarkdownFiles(dir: string, baseDir: string = ''): Promise<Array<{ filePath: string; relativePath: string; category: string }>> {
   const files: Array<{ filePath: string; relativePath: string; category: string }> = [];
   
@@ -47,11 +71,9 @@ async function getAllMarkdownFiles(dir: string, baseDir: string = ''): Promise<A
       const relativePath = path.join(baseDir, item.name);
       
       if (item.isDirectory()) {
-        // 递归读取子目录
         const subFiles = await getAllMarkdownFiles(fullPath, relativePath);
         files.push(...subFiles);
       } else if (item.isFile() && item.name.endsWith('.md')) {
-        // 确定分类
         const category = baseDir || 'general';
         files.push({
           filePath: fullPath,
@@ -67,7 +89,6 @@ async function getAllMarkdownFiles(dir: string, baseDir: string = ''): Promise<A
   return files;
 }
 
-// 获取所有文章列表（用于首页）
 export async function getAllPosts(): Promise<Post[]> {
   const markdownFiles = await getAllMarkdownFiles(contentDirectory);
 
@@ -77,8 +98,9 @@ export async function getAllPosts(): Promise<Post[]> {
         const fileContent = await fs.readFile(filePath, 'utf-8');
         const { data, content } = matter(fileContent);
 
-        // 生成摘要（取前200个字符）
-        const excerpt = content
+        const processedContent = processMarkdownLinks(content, category);
+
+        const excerpt = processedContent
           .replace(/[#*`]/g, '')
           .replace(/\n/g, ' ')
           .substring(0, 200) + '...';
@@ -104,7 +126,6 @@ export async function getAllPosts(): Promise<Post[]> {
     })
   );
 
-  // 过滤掉处理失败的文章并按日期排序（最新的在前）
   return posts
     .filter(post => post !== null)
     .sort((a, b) => {
@@ -114,7 +135,6 @@ export async function getAllPosts(): Promise<Post[]> {
     }) as Post[];
 }
 
-// 获取单篇文章的完整数据
 export async function getPostData(slug: string, category?: string): Promise<PostData> {
   try {
     console.log(`Trying to load post: ${slug}${category ? ` in category: ${category}` : ''}`);
@@ -122,7 +142,6 @@ export async function getPostData(slug: string, category?: string): Promise<Post
     const markdownFiles = await getAllMarkdownFiles(contentDirectory);
     let targetFile: { filePath: string; relativePath: string; category: string } | undefined;
     
-    // 如果指定了分类，优先在该分类下查找
     if (category) {
       for (const file of markdownFiles) {
         if (file.category === category) {
@@ -140,7 +159,6 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       }
     }
     
-    // 如果没找到或没指定分类，在所有文件中查找
     if (!targetFile) {
       for (const file of markdownFiles) {
         try {
@@ -165,9 +183,11 @@ export async function getPostData(slug: string, category?: string): Promise<Post
     const fileContent = await fs.readFile(targetFile.filePath, 'utf-8');
     const { data, content } = matter(fileContent);
     
-    const processedContent = await remark()
+    const processedContent = processMarkdownLinks(content, targetFile.category);
+    
+    const processedHtml = await remark()
       .use(html)
-      .process(content);
+      .process(processedContent);
 
     const cover = data.cover && data.cover.trim() ? data.cover : getRandomCover(slug);
 
@@ -177,12 +197,12 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       slug: data.slug || slug,
       category: targetFile.category,
       cover,
-      contentHtml: processedContent.toString(),
-      content,
+      contentHtml: processedHtml.toString(),
+      content: processedContent,
       date: data.date || '',
       tags: data.tags || [],
       author: data.author || '',
-      excerpt: content.replace(/[#*`]/g, '').substring(0, 200) + '...',
+      excerpt: processedContent.replace(/[#*`]/g, '').substring(0, 200) + '...',
     };
 
     console.log(`Successfully loaded post: ${slug}`, { title: postData.title, category: postData.category, cover: postData.cover });
@@ -193,7 +213,6 @@ export async function getPostData(slug: string, category?: string): Promise<Post
   }
 }
 
-// 获取所有文章的slug列表
 export async function getAllPostSlugs(): Promise<Array<{ slug: string; category: string }>> {
   try {
     const markdownFiles = await getAllMarkdownFiles(contentDirectory);
@@ -223,13 +242,11 @@ export async function getAllPostSlugs(): Promise<Array<{ slug: string; category:
   }
 }
 
-// 根据分类获取文章
 export async function getPostsByCategory(category: string): Promise<Post[]> {
   const allPosts = await getAllPosts();
   return allPosts.filter(post => post.category === category);
 }
 
-// 根据标签获取文章
 export async function getPostsByTag(tag: string): Promise<Post[]> {
   const allPosts = await getAllPosts();
   return allPosts.filter(post => 
@@ -237,7 +254,6 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
   );
 }
 
-// 搜索文章
 export async function searchPosts(query: string): Promise<Post[]> {
   const allPosts = await getAllPosts();
   const lowercaseQuery = query.toLowerCase();
@@ -249,7 +265,6 @@ export async function searchPosts(query: string): Promise<Post[]> {
   );
 }
 
-// 获取所有分类
 export async function getAllCategories(): Promise<string[]> {
   const allPosts = await getAllPosts();
   const categories = new Set(allPosts.map(post => post.category));
