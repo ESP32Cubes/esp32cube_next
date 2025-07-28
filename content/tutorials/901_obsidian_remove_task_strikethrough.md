@@ -1,6 +1,7 @@
 ---
 title: Obsidian remove strikethrough on completed tasks
-tags: - Obsidian
+tags:
+ - Obsidian
 summary: This post shows how to remove strikethrough on completed tasks in Obsidian.
 slug: obsidian-remove-strikethrough-on-completed-tasks
 date: 2024-12-30

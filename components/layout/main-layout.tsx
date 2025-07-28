@@ -12,8 +12,10 @@ export function MainLayout({ children }: MainLayoutProps) {
             <Header />
             {/* Main content area */}
             <main className="pt-8 flex-1">
-                <div className="container mx-auto">
-                    {children}
+                <div className="container-responsive">
+                    <div className="space-y-8">
+                        {children}
+                    </div>
                 </div>
             </main>
         </div>

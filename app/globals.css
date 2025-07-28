@@ -77,6 +77,13 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Layout variables */
+  --max-width: 80rem;
+  /* 1280px */
+  --container-padding: 1rem;
+  --container-padding-sm: 1.5rem;
+  --container-padding-lg: 2rem;
 }
 
 .dark {
@@ -120,5 +127,30 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Layout utilities */
+@layer utilities {
+  .container-responsive {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  @media (min-width: 640px) {
+    .container-responsive {
+      padding-left: var(--container-padding-sm);
+      padding-right: var(--container-padding-sm);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-responsive {
+      padding-left: var(--container-padding-lg);
+      padding-right: var(--container-padding-lg);
+    }
   }
 }

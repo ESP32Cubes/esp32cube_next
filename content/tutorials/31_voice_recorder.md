@@ -1,6 +1,7 @@
 ---
 title: ESP32 Voice Record and upload
-tags: - voice
+tags:
+ - voice
 summary: 
 slug: esp32-voice-record-and-upload
 date: 2025-01-19

@@ -1,6 +1,7 @@
 ---
 title: Set Proxy for Ollma on Windows
-tags: - Ollma
+tags:
+ - Ollma
 summary: Set proxy for ollama on Windows
 slug: set-proxy-for-ollma-on-windows
 date: 2025-04-15

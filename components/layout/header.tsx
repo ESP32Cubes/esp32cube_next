@@ -53,7 +53,7 @@ export function Header() {
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             {/* Top bar */}
-            <div className="container mx-auto flex h-14 items-center">
+            <div className="container-responsive flex h-14 items-center">
                 {/* Left: Menu button and Logo */}
                 <div className="flex items-center gap-4">
                     <Button
@@ -120,7 +120,7 @@ export function Header() {
 
             {/* Navigation menu */}
             <div className="border-t bg-background/95">
-                <div className="container mx-auto">
+                <div className="container-responsive">
                     <nav className="flex items-center space-x-6 h-12">
                         {navigation.map((item) => {
                             const isActive = pathname === item.href;

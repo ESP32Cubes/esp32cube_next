@@ -27,45 +27,41 @@ export default async function TutorialsPage({ searchParams }: TutorialsPageProps
     return (
         <>
             <MainLayout>
-                <div className="mx-auto">
-                    <div className="space-y-8">
-                        {/* Page header */}
-                        <div className="text-center">
-                            <h1 className="text-3xl font-bold tracking-tight">Tutorials</h1>
-                            <p className="text-muted-foreground mt-2">
-                                ESP32 development tutorials and guides
-                            </p>
+                {/* Page header */}
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight">Tutorials</h1>
+                    <p className="text-muted-foreground mt-2">
+                        ESP32 development tutorials and guides
+                    </p>
+                </div>
+
+                {/* Posts grid */}
+                {posts.length > 0 ? (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {currentPosts.map((post) => (
+                                <PostCard key={post.slug} post={post} />
+                            ))}
                         </div>
 
-                        {/* Posts grid */}
-                        {posts.length > 0 ? (
-                            <>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                    {currentPosts.map((post) => (
-                                        <PostCard key={post.slug} post={post} />
-                                    ))}
-                                </div>
-
-                                {/* Pagination */}
-                                <Pagination
-                                    currentPage={currentPage}
-                                    totalPages={totalPages}
-                                    baseUrl="/tutorials"
-                                />
-                            </>
-                        ) : (
-                            <Card>
-                                <CardContent className="flex flex-col items-center justify-center py-12">
-                                    <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
-                                    <h3 className="text-lg font-semibold mb-2">No tutorials yet</h3>
-                                    <p className="text-muted-foreground text-center">
-                                        Please add Markdown files in the content/tutorials folder
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        )}
-                    </div>
-                </div>
+                        {/* Pagination */}
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            baseUrl="/tutorials"
+                        />
+                    </>
+                ) : (
+                    <Card>
+                        <CardContent className="flex flex-col items-center justify-center py-12">
+                            <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
+                            <h3 className="text-lg font-semibold mb-2">No tutorials yet</h3>
+                            <p className="text-muted-foreground text-center">
+                                Please add Markdown files in the content/tutorials folder
+                            </p>
+                        </CardContent>
+                    </Card>
+                )}
             </MainLayout>
             <Footer />
         </>

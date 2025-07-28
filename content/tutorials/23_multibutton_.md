@@ -1,6 +1,7 @@
 ---
 title: Introduction to the Powerful MultiButton Key Driver Module
-tags: - Button
+tags:
+ - Button
 summary: MultiButton a powerful and easy-to-use key driver module. It explains its core advantages, usage steps, data structure, supported events, and provides example code.
 slug: introduction-to-the-powerful-multibutton-key-driver-module
 cover: 1.jpg

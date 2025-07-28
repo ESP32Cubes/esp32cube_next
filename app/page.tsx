@@ -26,50 +26,45 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const currentPosts = posts.slice(startIndex, endIndex);
 
   // Get posts for current page
-  // Note: categoryStats and latestByCategory are prepared for future use
 
   return (
     <>
       <MainLayout>
-        <div className="mx-auto">
-          <div className="space-y-8">
-            {/* Hero section */}
-            <div className="text-center">
-              <h1 className="text-3xl font-bold tracking-tight">ESP32Cube</h1>
-              <p className="text-muted-foreground mt-2">
-                ESP32 development tutorials, project cases, and technical sharing
-              </p>
-            </div>
+        {/* Hero section */}
+        <div className="text-center">
+          <h1 className="text-3xl font-bold tracking-tight">ESP32Cube</h1>
+          <p className="text-muted-foreground mt-2">
+            ESP32 development tutorials, project cases, and technical sharing
+          </p>
+        </div>
 
-            <div>
-              {posts.length > 0 ? (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {currentPosts.map((post) => (
-                      <PostCard key={post.slug} post={post} />
-                    ))}
-                  </div>
+        <div>
+          {posts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentPosts.map((post) => (
+                  <PostCard key={post.slug} post={post} />
+                ))}
+              </div>
 
-                  {/* All posts with pagination */}
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    baseUrl="/"
-                  />
-                </>
-              ) : (
-                <Card>
-                  <CardContent className="flex flex-col items-center justify-center py-12">
-                    <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No content available</h3>
-                    <p className="text-muted-foreground text-center">
-                      Please add Markdown files in the content folder
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
+              {/* All posts with pagination */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                baseUrl="/"
+              />
+            </>
+          ) : (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12">
+                <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No content available</h3>
+                <p className="text-muted-foreground text-center">
+                  Please add Markdown files in the content folder
+                </p>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </MainLayout>
       <Footer />
