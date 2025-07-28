@@ -18,7 +18,7 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
         const loadVditor = async () => {
             if (previewRef.current) {
                 try {
-                    // @ts-ignore
+                    // @ts-expect-error - Vditor types are not available
                     const VditorPreview = (await import('vditor/dist/method.min')).default;
 
                     // Determine Vditor theme based on current theme

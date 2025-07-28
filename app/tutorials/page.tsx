@@ -7,7 +7,7 @@ import { BookOpen } from 'lucide-react';
 import { Pagination } from '@/components/ui/pagination';
 
 interface TutorialsPageProps {
-    searchParams: { page?: string };
+    searchParams: Promise<{ page?: string }>;
 }
 
 export default async function TutorialsPage({ searchParams }: TutorialsPageProps) {
@@ -15,7 +15,8 @@ export default async function TutorialsPage({ searchParams }: TutorialsPageProps
 
     // Pagination logic
     const postsPerPage = 12;
-    const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+    const params = await searchParams;
+    const currentPage = params.page ? parseInt(params.page) : 1;
     const totalPages = Math.ceil(posts.length / postsPerPage);
 
     // Calculate pagination

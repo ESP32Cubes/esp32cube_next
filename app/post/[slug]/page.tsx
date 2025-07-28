@@ -148,7 +148,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <MainLayout>
                     <div className="max-w-4xl mx-auto text-center py-12">
                         <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
-                        <p className="text-gray-600 mb-6">Could not find a post with slug "{slug}"</p>
+                        <p className="text-gray-600 mb-6">Could not find a post with slug &quot;{slug}&quot;</p>
                         <Link href="/">
                             <Button>Return to Homepage</Button>
                         </Link>

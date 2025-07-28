@@ -3,13 +3,11 @@ import { MainLayout } from '@/components/layout/main-layout';
 import { Footer } from '@/components/layout/footer';
 import { PostCard } from '@/components/post-card';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { BookOpen, Lightbulb, FileText, Home } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import { Pagination } from '@/components/ui/pagination';
-import Link from 'next/link';
 
 interface HomePageProps {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {
@@ -18,7 +16,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   // Pagination logic
   const postsPerPage = 9;
-  const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+  const params = await searchParams;
+  const currentPage = params.page ? parseInt(params.page) : 1;
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
   // Calculate pagination
@@ -27,19 +26,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const currentPosts = posts.slice(startIndex, endIndex);
 
   // Get posts for current page
-  const categoryStats = categories.map(category => {
-    const count = posts.filter(post => post.category === category).length;
-    return { category, count };
-  });
-
-  // Get latest posts by category
-  const latestByCategory = categories.map(category => {
-    const categoryPosts = posts.filter(post => post.category === category);
-    return {
-      category,
-      latestPost: categoryPosts[0] // Latest post
-    };
-  });
+  // Note: categoryStats and latestByCategory are prepared for future use
 
   return (
     <>
