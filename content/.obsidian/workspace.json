@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tutorials/12_Develop_ESP32_in_VScode_with_PlatformIO.md",
+                "file": "tutorials/42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "12_Develop_ESP32_in_VScode_with_PlatformIO"
+              "title": "42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 350.5
   },
   "right": {
     "id": "cc8237cf2fd7e1cf",
@@ -170,6 +170,11 @@
   },
   "active": "e24dd4ee4e3a9048",
   "lastOpenFiles": [
+    "tutorials/45-esp32-with-lvgl-setp1-config-tft_espi-with-platformio.md",
+    "tutorials/42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio.md",
+    "tutorials/44-esp32-and-human-body-infrared-module.md",
+    "tutorials/43-testing-post.md",
+    "projects/46-sy8303-synchronous-step-down-regulator-dcdc-circuit-design.md",
     "images/001a7f50d4b8fe391ebe9a34f43bead4_MD5.jpg",
     "tutorials/11_ESP32_Dual-Core_Usage.md",
     "images/Pasted image 20250727232125.png",
@@ -199,15 +204,10 @@
     "images/tilt_swtich.excalidraw.svg",
     "images/Pasted image 20241129160230.jpeg",
     "images/Pasted image 20241129135756.jpeg",
-    "images/Pasted image 20241129134903.jpeg",
     "images/ESP32_Wroom.pdf",
     "images/ESP32_DevkitC.pdf",
     "tutorials/901_obsidian_remove_task_strikethrough.md",
     "tutorials/54_Control_LED_Brightness_with_ESP32_PWM.md",
-    "tutorials/53_ESP32_Sensor Tilt_Switch.md",
-    "tutorials/52_ESP32_Sensor_DHT11_Temperature_and_Humidity_Sensor.md",
-    "tutorials/32_ollma_proxy.md",
-    "tutorials/31_voice_recorder.md",
     "images",
     "新建文件夹"
   ]

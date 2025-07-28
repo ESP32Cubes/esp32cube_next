@@ -17,6 +17,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         const allPosts = await getAllPosts();
         const themeConfig = await getThemeConfig();
 
+        // Debug: Log the postData to check if updated_at is present
+        console.log('Post data for debugging:', {
+            slug: postData.slug,
+            title: postData.title,
+            updated_at: postData.updated_at,
+            created_at: postData.created_at
+        });
+
         return (
             <>
                 <MainLayout>
@@ -45,11 +53,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Calendar className="w-4 h-4" />
-                                                <span>{postData.date ? new Date(postData.date).toLocaleDateString('zh-CN', {
-                                                    year: 'numeric',
-                                                    month: '2-digit',
-                                                    day: '2-digit'
-                                                }).replace(/\//g, '-') : 'Unknown date'}</span>
+                                                <span>
+                                                    {postData.updated_at ? new Date(postData.updated_at).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric'
+                                                    }) : 'Unknown date'}
+                                                </span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Link href={`/${postData.category}`} className="hover:text-primary transition-colors">
@@ -98,15 +108,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                             <h3 className="text-lg font-semibold">Latest Posts</h3>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="space-y-3">
-                                                {allPosts.slice(0, 5).map((post) => (
-                                                    <Link key={post.slug} href={`/post/${post.slug}`}>
-                                                        <div className="text-sm text-primary hover:text-primary/80 transition-colors cursor-pointer">
-                                                            {post.title}
-                                                        </div>
-                                                    </Link>
+                                            <ul className="space-y-2">
+                                                {allPosts.slice(0, 5).map((post, index) => (
+                                                    <li key={post.slug}>
+                                                        <Link href={`/post/${post.slug}`} className="text-sm text-primary hover:text-primary/80 transition-colors cursor-pointer block">
+                                                            {index + 1}. {post.title}
+                                                        </Link>
+                                                    </li>
                                                 ))}
-                                            </div>
+                                            </ul>
                                         </CardContent>
                                     </Card>
 
@@ -116,21 +126,21 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                             <h3 className="text-lg font-semibold">Related Posts</h3>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="space-y-3">
+                                            <ul className="space-y-2">
                                                 {allPosts
                                                     .filter(post =>
                                                         post.category === postData.category &&
                                                         post.slug !== postData.slug
                                                     )
                                                     .slice(0, 5)
-                                                    .map((post) => (
-                                                        <Link key={post.slug} href={`/post/${post.slug}`}>
-                                                            <div className="text-sm text-primary hover:text-primary/80 transition-colors cursor-pointer">
-                                                                {post.title}
-                                                            </div>
-                                                        </Link>
+                                                    .map((post, index) => (
+                                                        <li key={post.slug}>
+                                                            <Link href={`/post/${post.slug}`} className="text-sm text-primary hover:text-primary/80 transition-colors cursor-pointer block">
+                                                                {index + 1}. {post.title}
+                                                            </Link>
+                                                        </li>
                                                     ))}
-                                            </div>
+                                            </ul>
                                         </CardContent>
                                     </Card>
                                 </div>

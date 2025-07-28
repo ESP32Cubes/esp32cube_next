@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Eye, Heart, User } from 'lucide-react';
+import { Eye, Heart } from 'lucide-react';
 import { Post } from '@/lib/posts';
 
 interface PostCardProps {
@@ -10,8 +9,8 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
-    // Generate random views (for demo only)
-    const views = Math.floor(Math.random() * 5000) + 100;
+    // Use actual views data or generate random for demo
+    const views = post.views || Math.floor(Math.random() * 5000) + 100;
 
     // Category display name
     const getCategoryName = (category: string) => {
@@ -47,11 +46,11 @@ export function PostCard({ post }: PostCardProps) {
                         </div>
                         <div className="flex items-center gap-4">
                             <time>
-                                {post.date ? new Date(post.date).toLocaleDateString('zh-CN', {
+                                {post.updated_at ? new Date(post.updated_at).toLocaleDateString('en-US', {
                                     year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit'
-                                }).replace(/\//g, '-') : 'Unknown date'}
+                                    month: 'short',
+                                    day: 'numeric'
+                                }) : 'Unknown date'}
                             </time>
                         </div>
                     </div>
@@ -92,7 +91,7 @@ export function PostCard({ post }: PostCardProps) {
                         </div>
                         <div className="flex items-center gap-1">
                             <Heart className="h-3 w-3" />
-                            <span>0</span>
+                            <span>{post.likes || 0}</span>
                         </div>
                     </div>
                 </CardContent>

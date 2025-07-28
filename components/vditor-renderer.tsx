@@ -57,6 +57,12 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
     return (
         <>
             <style jsx global>{`
+                /* Font family override for Vditor content */
+                .vditor-preview,
+                .vditor-preview * {
+                    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+                }
+
                 /* Global link styles */
                 .vditor-preview a {
                     color: hsl(var(--primary)) !important;
@@ -87,6 +93,12 @@ export function VditorRenderer({ content, codeTheme = 'github', defaultMode = 'l
                 .vditor-preview code a:hover {
                     color: inherit !important;
                     text-decoration: none !important;
+                }
+
+                /* Code block font override */
+                .vditor-preview pre,
+                .vditor-preview code {
+                    font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace !important;
                 }
             `}</style>
             <div ref={previewRef} className="vditor-preview" />

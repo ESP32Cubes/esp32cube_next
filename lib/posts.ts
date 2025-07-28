@@ -10,11 +10,14 @@ export interface Post {
   slug: string;
   category: string;
   cover?: string;
-  date?: string;
+  created_at?: string;
+  updated_at?: string;
   excerpt: string;
   summary?: string;
   tags?: string[];
   author?: string;
+  views?: number;
+  likes?: number;
 }
 
 export interface PostData extends Post {
@@ -23,7 +26,7 @@ export interface PostData extends Post {
 }
 
 const contentDirectory = path.join(process.cwd(), 'content');
-const fallbackCovers = ['/1.jpg', '/2.jpg', '/3.jpg', '/4.jpg'];
+const fallbackCovers = ['/1.jpg', '/2.jpg', '/3.jpg', '/4.jpg', '/5.jpg', '/6.jpg', '/7.jpg', '/8.jpg', '/9.jpg', '/10.jpg'];
 
 function getRandomCover(slug: string) {
   let hash = 0;
@@ -142,11 +145,14 @@ export async function getAllPosts(): Promise<Post[]> {
           slug,
           category,
           cover,
-          date: data.date ? String(data.date) : '',
+          created_at: data.created_at ? String(data.created_at) : '',
+          updated_at: data.updated_at ? String(data.updated_at) : '',
           excerpt,
           summary: data.summary || '',
           tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : []),
           author: data.author || '',
+          views: data.views ? Number(data.views) : 0,
+          likes: data.likes ? Number(data.likes) : 0,
         };
       } catch (error) {
         console.error(`Error processing file ${filePath}:`, error);
@@ -159,8 +165,8 @@ export async function getAllPosts(): Promise<Post[]> {
     .filter(post => post !== null)
     .sort((a, b) => {
       if (!a || !b) return 0;
-      if (!a.date || !b.date) return 0;
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      if (!a.updated_at || !b.updated_at) return 0;
+      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
     }) as Post[];
 }
 
@@ -228,11 +234,14 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       cover,
       contentHtml: processedHtml.toString(),
       content: processedContent,
-      date: data.date ? String(data.date) : '',
+      created_at: data.created_at ? String(data.created_at) : '',
+      updated_at: data.updated_at ? String(data.updated_at) : '',
       tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : []),
       author: data.author || '',
       summary: data.summary || '',
       excerpt: processedContent.replace(/[#*`]/g, '').substring(0, 200) + '...',
+      views: data.views ? Number(data.views) : 0,
+      likes: data.likes ? Number(data.likes) : 0,
     };
 
     console.log(`Successfully loaded post: ${slug}`, { title: postData.title, category: postData.category, cover: postData.cover });
