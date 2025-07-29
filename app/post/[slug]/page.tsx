@@ -15,14 +15,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         const postData = await getPostData(slug);
         const allPosts = await getAllPosts();
 
-        // Debug: Log the postData to check if updated_at is present
-        console.log('Post data for debugging:', {
-            slug: postData.slug,
-            title: postData.title,
-            updated_at: postData.updated_at,
-            created_at: postData.created_at
-        });
-
         return (
             <>
                 <MainLayout>
