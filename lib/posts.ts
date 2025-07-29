@@ -1,8 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
 
 export interface Post {
   filename: string;
@@ -21,7 +19,6 @@ export interface Post {
 }
 
 export interface PostData extends Post {
-  contentHtml: string;
   content: string;
 }
 
@@ -219,10 +216,6 @@ export async function getPostData(slug: string, category?: string): Promise<Post
     const { data, content } = matter(fileContent);
     
     const processedContent = processMarkdownLinks(content, targetFile.category);
-    
-    const processedHtml = await remark()
-      .use(html)
-      .process(processedContent);
 
     const cover = data.cover && data.cover.trim() ? processCoverPath(data.cover) : getRandomCover(slug);
 
@@ -232,7 +225,6 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       slug: data.slug || slug,
       category: targetFile.category,
       cover,
-      contentHtml: processedHtml.toString(),
       content: processedContent,
       created_at: data.created_at ? String(data.created_at) : '',
       updated_at: data.updated_at ? String(data.updated_at) : '',

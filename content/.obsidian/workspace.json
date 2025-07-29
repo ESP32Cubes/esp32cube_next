@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tutorials/42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio.md",
+                "file": "tutorials/43-testing-post.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio"
+              "title": "43-testing-post"
             }
           }
         ]
@@ -170,10 +170,13 @@
   },
   "active": "e24dd4ee4e3a9048",
   "lastOpenFiles": [
-    "tutorials/45-esp32-with-lvgl-setp1-config-tft_espi-with-platformio.md",
-    "tutorials/42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio.md",
-    "tutorials/44-esp32-and-human-body-infrared-module.md",
+    "tutorials/51-how-to-play-internet-radio-stations-with-esp32.md",
+    "tutorials/test-obsidian-syntax.md",
+    "tutorials/test-syntax-highlighting.md",
     "tutorials/43-testing-post.md",
+    "tutorials/42-esp32-with-lvgl-setp2-config-tft_espi-with-platformio.md",
+    "tutorials/45-esp32-with-lvgl-setp1-config-tft_espi-with-platformio.md",
+    "tutorials/44-esp32-and-human-body-infrared-module.md",
     "projects/46-sy8303-synchronous-step-down-regulator-dcdc-circuit-design.md",
     "images/001a7f50d4b8fe391ebe9a34f43bead4_MD5.jpg",
     "tutorials/11_ESP32_Dual-Core_Usage.md",
@@ -199,15 +202,12 @@
     "images/Pasted image 20250415194607.jpeg",
     "images/touch_button2.jpg",
     "images/Rotation Encoder.jpeg",
-    "Pasted.md",
     "images/pt1000_resistance.svg",
     "images/tilt_swtich.excalidraw.svg",
     "images/Pasted image 20241129160230.jpeg",
     "images/Pasted image 20241129135756.jpeg",
     "images/ESP32_Wroom.pdf",
     "images/ESP32_DevkitC.pdf",
-    "tutorials/901_obsidian_remove_task_strikethrough.md",
-    "tutorials/54_Control_LED_Brightness_with_ESP32_PWM.md",
     "images",
     "新建文件夹"
   ]
