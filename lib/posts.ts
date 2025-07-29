@@ -48,7 +48,7 @@ function processCoverPath(coverPath: string): string {
   return `/content/images/${encodedCoverPath}`;
 }
 
-function processMarkdownLinks(content: string, currentCategory: string): string {
+function processMarkdownLinks(content: string): string {
   // Process internal article links: [Article Title](ArticleFileName.md)
   content = content.replace(
     /\[([^\]]+)\]\(([^)]+\.md)\)/g,
@@ -126,7 +126,7 @@ export async function getAllPosts(): Promise<Post[]> {
         const fileContent = await fs.readFile(filePath, 'utf-8');
         const { data, content } = matter(fileContent);
 
-        const processedContent = processMarkdownLinks(content, category);
+        const processedContent = processMarkdownLinks(content);
 
         const excerpt = processedContent
           .replace(/[#*`]/g, '')
@@ -215,7 +215,7 @@ export async function getPostData(slug: string, category?: string): Promise<Post
     const fileContent = await fs.readFile(targetFile.filePath, 'utf-8');
     const { data, content } = matter(fileContent);
     
-    const processedContent = processMarkdownLinks(content, targetFile.category);
+    const processedContent = processMarkdownLinks(content);
 
     const cover = data.cover && data.cover.trim() ? processCoverPath(data.cover) : getRandomCover(slug);
 

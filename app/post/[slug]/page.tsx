@@ -5,9 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Link from 'next/link';
-import { Calendar, User, Tag, ArrowLeft, FolderOpen } from 'lucide-react';
+import { Calendar, User, Tag, FolderOpen } from 'lucide-react';
 import { PostContent } from '@/components/post-content';
-import { getThemeConfig } from '@/lib/server-config';
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
@@ -15,7 +14,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     try {
         const postData = await getPostData(slug);
         const allPosts = await getAllPosts();
-        const themeConfig = await getThemeConfig();
 
         // Debug: Log the postData to check if updated_at is present
         console.log('Post data for debugging:', {

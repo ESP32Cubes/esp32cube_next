@@ -7,28 +7,22 @@ export async function GET(
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
-    const { path: imagePath } = await params;
-    const imageName = imagePath.join('/');
+    const { path: pathSegments } = await params;
+    const imagePath = path.join(process.cwd(), 'content', 'images', ...pathSegments);
     
-    // Decode URL-encoded image name
-    const decodedImageName = decodeURIComponent(imageName);
-    
-    // Build the full path for the image file
-    const imageFilePath = path.join(process.cwd(), 'content', 'images', decodedImageName);
-    
-    // Check if the file exists
+    // Check if file exists
     try {
-      await fs.access(imageFilePath);
-    } catch (error) {
+      await fs.access(imagePath);
+    } catch {
       return new NextResponse('Image not found', { status: 404 });
     }
-    
+
     // Read the image file
-    const imageBuffer = await fs.readFile(imageFilePath);
+    const imageBuffer = await fs.readFile(imagePath);
     
     // Determine content type based on file extension
-    const ext = path.extname(decodedImageName).toLowerCase();
-    let contentType = 'image/jpeg'; // Default type
+    const ext = path.extname(imagePath).toLowerCase();
+    let contentType = 'image/jpeg'; // default
     
     switch (ext) {
       case '.png':
@@ -45,20 +39,17 @@ export async function GET(
         break;
       case '.jpg':
       case '.jpeg':
-      default:
         contentType = 'image/jpeg';
         break;
     }
-    
-    // Return the image file
+
     return new NextResponse(imageBuffer, {
       headers: {
         'Content-Type': contentType,
         'Cache-Control': 'public, max-age=31536000, immutable',
       },
     });
-  } catch (error) {
-    console.error('Error serving image:', error);
+  } catch {
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 } 

@@ -1,4 +1,4 @@
-import { getAllPosts, getAllCategories } from '@/lib/posts';
+import { getAllPosts } from '@/lib/posts';
 import { MainLayout } from '@/components/layout/main-layout';
 import { Footer } from '@/components/layout/footer';
 import { PostCard } from '@/components/post-card';
@@ -6,24 +6,25 @@ import { Card, CardContent } from '@/components/ui/card';
 import { BookOpen } from 'lucide-react';
 import { Pagination } from '@/components/ui/pagination';
 
-interface HomePageProps {
+export default async function HomePage({
+  searchParams,
+}: {
   searchParams: Promise<{ page?: string }>;
-}
-
-export default async function HomePage({ searchParams }: HomePageProps) {
-  const posts = await getAllPosts();
-  const categories = await getAllCategories();
+}) {
+  const params = await searchParams;
+  const page = parseInt(params.page || '1');
+  const allPosts = await getAllPosts();
+  // const categories = await getAllCategories(); // 暂时注释掉，因为未使用
 
   // Pagination logic
   const postsPerPage = 9;
-  const params = await searchParams;
-  const currentPage = params.page ? parseInt(params.page) : 1;
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const currentPage = page;
+  const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
   // Calculate pagination
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
+  const currentPosts = allPosts.slice(startIndex, endIndex);
 
   // Get posts for current page
 
@@ -39,7 +40,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         </div>
 
         <div>
-          {posts.length > 0 ? (
+          {allPosts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {currentPosts.map((post) => (
