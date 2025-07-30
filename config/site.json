@@ -8,15 +8,6 @@
         "author": "ESP32Cube Team",
         "email": "contact@esp32cube.com"
     },
-    "database": {
-        "type": "file",
-        "path": "./data",
-        "host": "localhost",
-        "port": 5432,
-        "name": "esp32cube",
-        "username": "",
-        "password": ""
-    },
     "content": {
         "directory": "./content",
         "supportedFormats": [

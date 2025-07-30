@@ -11,15 +11,6 @@ export interface SiteConfig {
     author: string;
     email: string;
   };
-  database: {
-    type: string;
-    path: string;
-    host: string;
-    port: number;
-    name: string;
-    username: string;
-    password: string;
-  };
   content: {
     directory: string;
     supportedFormats: string[];
@@ -83,15 +74,7 @@ export async function getConfig(): Promise<SiteConfig> {
         author: 'ESP32Cube Team',
         email: 'contact@esp32cube.com'
       },
-      database: {
-        type: 'sqlite',
-        path: './data/posts.db',
-        host: 'localhost',
-        port: 5432,
-        name: 'esp32cube_db',
-        username: '',
-        password: ''
-      },
+
       content: {
         directory: './content',
         supportedFormats: ['.md', '.markdown'],
@@ -140,8 +123,14 @@ export async function getSiteInfo() {
 }
 
 export async function getDatabaseConfig() {
-  const config = await getConfig();
-  return config.database;
+  // 数据库配置现在从环境变量获取
+  return {
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT || '3306'),
+    name: process.env.DB_DATABASE || 'esp32cube',
+    username: process.env.DB_USER || '',
+    password: process.env.DB_PASSWORD || '',
+  };
 }
 
 export async function getThemeConfig() {

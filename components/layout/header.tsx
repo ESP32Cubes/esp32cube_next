@@ -19,6 +19,7 @@ import {
     Tags
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { UserMenu } from '@/components/auth/user-menu';
 
 const navigation = [
     {
@@ -110,11 +111,8 @@ export function Header() {
                         <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                     </Button>
 
-                    {/* User info */}
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <User className="h-4 w-4" />
-                        <span>Guest</span>
-                    </div>
+                    {/* User menu */}
+                    <UserMenu />
                 </div>
             </div>
 

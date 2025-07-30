@@ -7,6 +7,9 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Link from 'next/link';
 import { Calendar, User, Tag, FolderOpen } from 'lucide-react';
 import { PostContent } from '@/components/post-content';
+import { PostActions } from '@/components/post-actions';
+import { CommentsSection } from '@/components/comments-section';
+import { getPostStats } from '@/lib/database';
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
@@ -14,6 +17,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     try {
         const postData = await getPostData(slug);
         const allPosts = await getAllPosts();
+        const postStats = await getPostStats(slug);
 
         return (
             <>
@@ -82,6 +86,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                                     <PostContent
                                         content={postData.content}
                                     />
+
+                                    {/* Post actions */}
+                                    <div className="mt-6 pt-6 border-t">
+                                        <PostActions
+                                            slug={slug}
+                                            initialLikes={postStats.likes}
+                                            initialViews={postStats.views}
+                                        />
+                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
@@ -132,6 +145,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                             </Card>
                         </div>
                     </div>
+
+                    {/* Comments section */}
+                    <CommentsSection postSlug={slug} />
                 </MainLayout>
                 <Footer />
             </>
