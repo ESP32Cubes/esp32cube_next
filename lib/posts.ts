@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { execSync } from 'child_process';
 
 export interface Post {
   filename: string;
@@ -24,6 +25,45 @@ export interface PostData extends Post {
 
 const contentDirectory = path.join(process.cwd(), 'content');
 const fallbackCovers = ['/1.jpg', '/2.jpg', '/3.jpg', '/4.jpg', '/5.jpg', '/6.jpg', '/7.jpg', '/8.jpg', '/9.jpg', '/10.jpg'];
+
+// 预生成的 git 时间数据
+let gitTimesData: Record<string, { created_at: string; updated_at: string }> = {};
+
+/**
+ * 加载预生成的 git 时间数据
+ */
+async function loadGitTimesData() {
+  if (Object.keys(gitTimesData).length > 0) {
+    return; // 已经加载过了
+  }
+  
+  try {
+    const gitTimesPath = path.join(process.cwd(), 'lib/git-times.json');
+    const data = await fs.readFile(gitTimesPath, 'utf-8');
+    gitTimesData = JSON.parse(data);
+  } catch (error) {
+    console.warn('Git times data not found, using fallback');
+    gitTimesData = {};
+  }
+}
+
+/**
+ * 获取文件的 git 创建和更新时间
+ * @param filePath 文件路径
+ * @returns { created_at: string, updated_at: string }
+ */
+async function getGitTimes(filePath: string): Promise<{ created_at: string; updated_at: string }> {
+  // 确保 git 时间数据已加载
+  await loadGitTimesData();
+  
+  // 获取文件的相对路径（相对于 content 目录）
+  const relativePath = path.relative(contentDirectory, filePath);
+  
+  // 从预生成的数据中获取时间
+  const times = gitTimesData[relativePath] || { created_at: '', updated_at: '' };
+  
+  return times;
+}
 
 function getRandomCover(slug: string) {
   let hash = 0;
@@ -136,14 +176,19 @@ export async function getAllPosts(): Promise<Post[]> {
         const slug = data.slug || path.basename(relativePath, '.md');
         const cover = data.cover && data.cover.trim() ? processCoverPath(data.cover) : getRandomCover(slug);
 
+        // 获取 git 时间，优先使用 git 时间，如果没有则使用 frontmatter 中的时间
+        const gitTimes = await getGitTimes(filePath);
+        const created_at = gitTimes.created_at || (data.created_at ? String(data.created_at) : '');
+        const updated_at = gitTimes.updated_at || (data.updated_at ? String(data.updated_at) : '');
+
         return {
           filename: path.basename(relativePath),
           title: data.title || path.basename(relativePath, '.md'),
           slug,
           category,
           cover,
-          created_at: data.created_at ? String(data.created_at) : '',
-          updated_at: data.updated_at ? String(data.updated_at) : '',
+          created_at,
+          updated_at,
           excerpt,
           summary: data.summary || '',
           tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : []),
@@ -219,6 +264,11 @@ export async function getPostData(slug: string, category?: string): Promise<Post
 
     const cover = data.cover && data.cover.trim() ? processCoverPath(data.cover) : getRandomCover(slug);
 
+    // 获取 git 时间，优先使用 git 时间，如果没有则使用 frontmatter 中的时间
+    const gitTimes = await getGitTimes(targetFile.filePath);
+    const created_at = gitTimes.created_at || (data.created_at ? String(data.created_at) : '');
+    const updated_at = gitTimes.updated_at || (data.updated_at ? String(data.updated_at) : '');
+
     const postData = {
       filename: path.basename(targetFile.relativePath),
       title: data.title || slug,
@@ -226,8 +276,8 @@ export async function getPostData(slug: string, category?: string): Promise<Post
       category: targetFile.category,
       cover,
       content: processedContent,
-      created_at: data.created_at ? String(data.created_at) : '',
-      updated_at: data.updated_at ? String(data.updated_at) : '',
+      created_at,
+      updated_at,
       tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : []),
       author: data.author || '',
       summary: data.summary || '',
